@@ -28,12 +28,7 @@ fn main() {
                 .map(|j: usize| {
                     let path = format!("./moduletmp/image{}", j);
                     std::fs::copy("./moduletmp/image", &path).unwrap();
-                    let x = std::time::Instant::now();
-                    let m = unsafe { Module::deserialize_file(&engine, &path).unwrap() };
-                    if j == (1 << i) - 3 || j == 3 {
-                        println!("{:?}", x.elapsed());
-                    }
-                    m
+                    unsafe { Module::deserialize_file(&engine, &path).unwrap() }
                 })
                 .collect::<Vec<_>>();
             let mut store = Store::new(&engine, ());
